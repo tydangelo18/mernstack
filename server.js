@@ -9,6 +9,9 @@ const app = express();
 // Connect Database
 connectDB();
 
+// Init Middleware Bodyparser
+app.use(express.json({ extended: false }));
+
 // Test an endpoint to see if server and Express API is running
 app.get('/', (req, res) => res.send('API Running!'));
 
