@@ -194,6 +194,84 @@ router.put('/experience', [auth, [
         }
 });
 
+//@route DELETE api/profile/experience/:exp_id
+//@desc Delete experience from profile
+//@access Private
+router.delete('/experience/:exp_id', auth, async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
+        // Get Index of experience we want
+        const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id);
+        // Splice the Index out
+        profile.experience.splice(removeIndex, 1);
+        // Re-Save it
+        await profile.save();
+        // Send Updated Profile
+        res.json(profile);
+    } catch(err) {
+        console.error(err.message);
+        res.status(500).send('Server Error')
+    }
+});
+
+//@route PUT api/profile/education
+//@desc add profile education
+//@access Private
+router.put('/education', [auth, [
+    check('school', 'School is required').not().isEmpty(),
+    check('degree', 'Degree is required').not().isEmpty(),
+    check('fieldofstudy', 'Field of Study is required').not().isEmpty(),
+    check('from', 'From date is required').not().isEmpty()
+]
+],
+async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    // Destructure and pull out some data from req.body (data coming in)
+    const {
+        school, degree, fieldofstudy, from, to, current, description
+    } = req.body;
+
+    // Create an a new object with the data that the user submits
+    const newEdu = {
+        school, degree, fieldofstudy, from, to, current, description
+    };
+    // MongoDB interaction
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
+        
+        profile.education.unshift(newEdu);
+        
+        await profile.save();
+
+        res.json(profile);
+    } catch(err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+//@route DELETE api/profile/education/:edu_id
+//@desc Delete education from profile
+//@access Private
+router.delete('/education/:edu_id', auth, async (req, res) => {
+try {
+    const profile = await Profile.findOne({ user: req.user.id });
+    // Get Index of experience we want
+    const removeIndex = profile.education.map(item => item.id).indexOf(req.params.edu_id);
+    // Splice the Index out
+    profile.education.splice(removeIndex, 1);
+    // Re-Save it
+    await profile.save();
+    // Send Updated Profile
+    res.json(profile);
+} catch(err) {
+    console.error(err.message);
+    res.status(500).send('Server Error')
+}
+});
 
 // Export Route
 module.exports = router;
