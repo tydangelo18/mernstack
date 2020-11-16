@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 const ProfileAbout = ({
   // Destructure profile to get what we need for this component as props to pass into the return section below
   profile: {
+    user: { name },
     bio,
     skills,
-    user: { name },
   },
 }) => {
   return (
@@ -15,16 +15,14 @@ const ProfileAbout = ({
         // If there is a bio in the profile, display the bio in a <Fragment>
         // Trim the name, split the string into an comma separated array, then display the [0] index (which is the first name) to show only the first name's bio
       }
-      {
-       // {bio && (
-       // <Fragment>
-       //   <h2 class='text-primary'>{name.trim().split(' ')[0]}'s Bio</h2>
-       //   <p>{bio}</p>
-       //   <div class='line'></div>
-       // </Fragment>
-       //     )}
-      }
-      
+
+      {bio && (
+        <Fragment>
+          <h2 class='text-primary'>{name}'s Bio</h2>
+          <p>{bio}</p>
+          <div class='line'></div>
+        </Fragment>
+      )}
 
       <h2 class='text-primary'>Skill Set</h2>
       {
