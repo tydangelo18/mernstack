@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
+import ProfileExperience from './ProfileExperience';
+import ProfileEducation from './ProfileEducation';
 import { getProfileById } from '../../actions/profile';
 
 const Profile = ({
@@ -37,6 +39,42 @@ const Profile = ({
           <div class='profile-grid my-1'>
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
+            <div class='profile-exp bg-white p-2'>
+              <h2 class='text-primary'>Experience</h2>
+              {
+                // Looping through the experience array to make sure there is anything in it, and then mapping through it and displaying it if there is
+              }
+              {profile.experience.length > 0 ? (
+                <Fragment>
+                  {profile.experience.map((experience) => (
+                    <ProfileExperience
+                      key={experience._id}
+                      experience={experience}
+                    />
+                  ))}
+                </Fragment>
+              ) : (
+                <h4>No Experience Credentials</h4>
+              )}
+            </div>
+            <div class='profile-edu bg-white p-2'>
+              <h2 class='text-primary'>Education</h2>
+              {
+                // Looping through the education array to make sure there is anything in it, and then mapping through it and displaying it if there is
+              }
+              {profile.education.length > 0 ? (
+                <Fragment>
+                  {profile.education.map((education) => (
+                    <ProfileEducation
+                      key={education._id}
+                      education={education}
+                    />
+                  ))}
+                </Fragment>
+              ) : (
+                <h4>No Education Credentials</h4>
+              )}
+            </div>
           </div>
         </Fragment>
       )}
