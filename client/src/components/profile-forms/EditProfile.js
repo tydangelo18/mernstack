@@ -32,6 +32,7 @@ const EditProfile = ({
   useEffect(() => {
     getCurrentProfile();
     setFormData({
+      // Needs to be refactored to understand why edit profile cannot be done on certain profiles.
       company: loading || !profile.company ? '' : profile.company,
       website: loading || !profile.website ? '' : profile.website,
       location: loading || !profile.location ? '' : profile.location,
