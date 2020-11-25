@@ -4,7 +4,7 @@
 
 ## Deployment
 
-- Live Link on [Heroku](https://guarded-inlet-21996.herokuapp.com/).
+- Live Link on [Heroku](https://calm-beach-83427.herokuapp.com/).
 
 ## Preview
 
